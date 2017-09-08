@@ -14,7 +14,7 @@ using MvvmCross.Core.ViewModels;
 using Xamarin.Forms;
 using MvvmCross.Platform;
 using Xamarin.Forms.Platform.Android;
-
+using Acr.UserDialogs;
 
 namespace Bagahe.Droid
 {
@@ -27,6 +27,7 @@ namespace Bagahe.Droid
         {
             base.OnCreate(bundle);
             Xamarin.Forms.Forms.Init(this, bundle);
+            UserDialogs.Init(this);
             Mvx.Resolve<IMvxPageNavigationHost>().NavigationProvider = this;
             Mvx.Resolve<IMvxAppStart>().Start();
 

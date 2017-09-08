@@ -1,4 +1,6 @@
-﻿using MvvmCross.Core.ViewModels;
+﻿using Acr.UserDialogs;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace Bagahe
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
+            Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
             this.RegisterAppStart<MainViewModel>();
 
