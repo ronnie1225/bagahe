@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Bagahe.ViewModels.Login;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
@@ -21,7 +22,7 @@ namespace Bagahe
 
             Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
-            this.RegisterAppStart<MainViewModel>();
+            this.RegisterAppStart<LoginViewModel>();
 
         }
     }
