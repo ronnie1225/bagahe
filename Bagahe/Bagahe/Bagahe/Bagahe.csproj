@@ -48,6 +48,8 @@
     <Compile Include="ViewModels\Login\SignupResultViewModel.cs" />
     <Compile Include="ViewModels\Login\SignupViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Search\TrackBaggageResultViewModel.cs" />
+    <Compile Include="ViewModels\Search\TrackBaggageViewModel.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -61,6 +63,12 @@
     <Compile Include="Views\SignupView.xaml.cs">
       <DependentUpon>SignupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TrackBaggageResultView.xaml.cs">
+      <DependentUpon>TrackBaggageResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrackBaggageView.xaml.cs">
+      <DependentUpon>TrackBaggageView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MainView.xaml">
@@ -70,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
-    <Folder Include="ViewModels\Search\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -134,6 +141,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\SignupResultView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\TrackBaggageView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\TrackBaggageResultView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -16,13 +16,13 @@ namespace Bagahe.ViewModels.Login
     {
         private readonly ILoginService _service;
         private readonly IUserDialogs _udialog;
-       
+
 
         public LoginViewModel(ILoginService service, IUserDialogs dialog)
         {
             _service = service;
             _udialog = dialog;
-          
+
         }
 
         private string _userName;
@@ -61,7 +61,8 @@ namespace Bagahe.ViewModels.Login
         {
             get
             {
-                return new MvxCommand(async () => {
+                return new MvxCommand(async () =>
+                {
 
                     bool isValid = validateUserInput();
                     bool isValidUser = false;
@@ -69,10 +70,7 @@ namespace Bagahe.ViewModels.Login
                     {
                         UserDialogs.Instance.ShowLoading("Loading", MaskType.Black);
 
-                        
-
                         isValidUser = await _service.ValidateLogin(Username, Password);
-                        
 
                         if (isValidUser)
                         {
@@ -82,9 +80,7 @@ namespace Bagahe.ViewModels.Login
                         {
                             LoginErrorMsg = "Incorrect Username or Password";
                         }
-
                     }
-
                 });
             }
         }
@@ -93,7 +89,8 @@ namespace Bagahe.ViewModels.Login
         {
             get
             {
-                return new MvxCommand(() => {
+                return new MvxCommand(() =>
+                {
                     ShowViewModel<SignupViewModel>();
                 });
             }
@@ -148,9 +145,5 @@ namespace Bagahe.ViewModels.Login
                 RaisePropertyChanged(() => PasswordErrorMsg);
             }
         }
-
-
-
-
     }
 }

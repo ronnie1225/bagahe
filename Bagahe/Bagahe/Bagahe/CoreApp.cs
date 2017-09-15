@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using Bagahe.ViewModels.Login;
+using Bagahe.ViewModels.Search;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
@@ -22,8 +23,26 @@ namespace Bagahe
 
             Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
-            this.RegisterAppStart<LoginViewModel>();
+            RegisterAppStart(new CustomAppStart());
 
+        }
+    }
+
+    public class CustomAppStart : MvxNavigatingObject, IMvxAppStart
+    {
+        public void Start(object hint = null)
+        {
+            //Change code where you check if the user has previously logged in
+            bool isLoggedIn = true;
+
+            if (isLoggedIn)
+            {
+                ShowViewModel<TrackBaggageViewModel>();
+            }
+            else
+            {
+                ShowViewModel<LoginViewModel>();
+            }
         }
     }
 }
