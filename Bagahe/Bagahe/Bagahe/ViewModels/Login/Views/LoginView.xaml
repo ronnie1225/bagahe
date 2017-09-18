@@ -33,7 +33,7 @@
                    Orientation="Vertical"
                    Spacing="4">
         <ContentView Padding="20">
-          <Image Source="bag_logov1.png" HeightRequest="150"/>
+          <Image Source="bag_logov1.png" HeightRequest="100"/>
         </ContentView>
         <Label Text="{Binding LoginErrorMsg}"
               Style="{StaticResource loginErrorMsg}"/>
@@ -49,14 +49,31 @@
         <Button Text="Login"
                 Style="{StaticResource buttonProperty}"
                 Command ="{Binding ShowMenuPageCommand}"/>
-
-        <Label Text="Don't have an account?"
-         HorizontalTextAlignment="Center"
-         VerticalTextAlignment="Center" />
-        <Button Text="Signup"
-                BackgroundColor="Transparent"
-                TextColor="Blue"
-                Command ="{Binding ShowSignUpCommand}"/>
+        <StackLayout VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     Orientation="Vertical">
+          <Button Text="Forgot Password?"
+                  FontSize="13"
+                  TextColor="Blue"
+                  BackgroundColor="Transparent"
+                  Command="{Binding ShowForgotPasswordCommand}"/>
+        </StackLayout>
+          
+        <ContentView Padding="0,20,0,0">
+          <StackLayout VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     Orientation="Vertical">
+            <Label Text="Don't have an account?"/>
+          </StackLayout>
+        </ContentView>
+        <StackLayout VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     Orientation="Vertical">
+            <Button Text="Signup"
+                    BackgroundColor="Transparent"
+                    TextColor="Blue"
+                    Command ="{Binding ShowSignUpCommand}"/>
+          </StackLayout>
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>
