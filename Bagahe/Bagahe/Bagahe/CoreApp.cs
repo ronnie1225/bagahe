@@ -33,7 +33,7 @@ namespace Bagahe
         public void Start(object hint = null)
         {
             //Change code where you check if the user has previously logged in
-            bool isLoggedIn = true;
+            bool isLoggedIn = false;
 
             if (isLoggedIn)
             {

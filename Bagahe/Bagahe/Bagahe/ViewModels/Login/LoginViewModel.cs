@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using Bagahe.Interfaces;
+using Bagahe.ViewModels.Search;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using System;
@@ -15,13 +16,11 @@ namespace Bagahe.ViewModels.Login
     class LoginViewModel : BaseViewModel
     {
         private readonly ILoginService _service;
-        private readonly IUserDialogs _udialog;
 
 
-        public LoginViewModel(ILoginService service, IUserDialogs dialog)
+        public LoginViewModel(ILoginService service)
         {
             _service = service;
-            _udialog = dialog;
 
         }
 
@@ -74,7 +73,7 @@ namespace Bagahe.ViewModels.Login
 
                         if (isValidUser)
                         {
-                            LoginErrorMsg = "SUCCESS!";
+                            ShowViewModel<TrackBaggageViewModel>();
                         }
                         else
                         {
@@ -96,6 +95,16 @@ namespace Bagahe.ViewModels.Login
             }
         }
 
+        public ICommand ShowForgotPasswordCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    ShowViewModel<ForgotPasswordViewModel>();
+                });
+            }
+        }
         private bool validateUserInput()
         {
             bool isValid = false;

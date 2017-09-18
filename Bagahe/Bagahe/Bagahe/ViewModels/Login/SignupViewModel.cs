@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -62,8 +63,11 @@ namespace Bagahe.ViewModels.Login
                 SignupErrMsg.LastNameErrMsg = "Last name is required.";
             if (isEmpty(SignupFields.Username))
                 SignupErrMsg.UsernameErrMsg = "Username is required.";
-            if (isEmpty(SignupFields.Password))
-                SignupErrMsg.PasswordErrMsg = "Password is required.";
+
+            //Validate Password and email
+            isValidPassword(SignupFields.Password);
+            isValidEmail(SignupFields.Email);
+
             if (isEmpty(SignupFields.RePassword))
             {
                 SignupErrMsg.RePasswordErrMsg = "Please re-enter your password.";
@@ -76,9 +80,7 @@ namespace Bagahe.ViewModels.Login
                     countInvalidInput++;
                 }
             }
-            if (isEmpty(SignupFields.Email))
-                SignupErrMsg.EmailErrMsg = "Email address is required.";
-
+            
             if (countInvalidInput != 0)
             {
                 SignUpGeneralErrorMsg = "Please correct the " + countInvalidInput + " item";
@@ -102,7 +104,57 @@ namespace Bagahe.ViewModels.Login
             }
             return result;
         }
+        private void isValidPassword(string password)
+        {
+            if (isEmpty(password))
+            {
+                SignupErrMsg.PasswordErrMsg = "Password is required.";
+            } else if (password.Length < 8)
+            {
 
+                SignupErrMsg.PasswordErrMsg = "Passwords must be at least 8 characters long.";
+            }
+            else 
+            {
+
+                if (!Regex.IsMatch(password, @"[A-Z]"))
+                {
+                    SignupErrMsg.PasswordErrMsg = "Your password must contain an uppercase letter.";
+                    countInvalidInput++;
+                }
+                else if (!Regex.IsMatch(password, @"[a-z]"))
+                {
+                    SignupErrMsg.PasswordErrMsg = "Your password must contain a lowercase letter.";
+                    countInvalidInput++;
+                }
+                else if (!Regex.IsMatch(password, @"[0-9]"))
+                {
+                    SignupErrMsg.PasswordErrMsg = "Your password must contain a number.";
+                    countInvalidInput++;
+                }
+            }
+        }
+
+
+        private void isValidEmail(string email)
+        {
+            if (isEmpty(email))
+            {
+                SignupErrMsg.EmailErrMsg = "The email address is required.";
+            }
+            else
+            {
+                string regex = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
+                bool isEmail = Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
+                if (!isEmail)
+                {
+                    SignupErrMsg.EmailErrMsg = "The email address you entered is not valid.";
+                    countInvalidInput++;
+                }
+            }
+
+            
+        }
 
         private SignupErrMsg _signupErrMsg = new SignupErrMsg();
         public SignupErrMsg SignupErrMsg
