@@ -13,21 +13,14 @@ namespace Bagahe.Services
         async Task<bool> IForgotPasswordService.CheckEmail(string email)
         {
             bool isExisting = false;
-            using (UserDialogs.Instance.Loading("Checking email..."))
-            {
-                //checking the email to DB
-                await addDelay();
-            }
+            await addDelay();
+            //checking the email to DB
             if (email.Equals("admin@admin.com"))
             {
-                //Send email
-                using(UserDialogs.Instance.Loading("Sending email..."))
-                {
-                    isExisting = true;
-                    await addDelay();
-                }
-               
+                isExisting = true;
             }
+               
+            
             return isExisting;
         }
 

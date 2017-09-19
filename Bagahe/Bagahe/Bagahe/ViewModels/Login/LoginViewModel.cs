@@ -16,46 +16,15 @@ namespace Bagahe.ViewModels.Login
     class LoginViewModel : BaseViewModel
     {
         private readonly ILoginService _service;
+        private readonly IUserDialogs _udialog;
 
-
-        public LoginViewModel(ILoginService service)
+        public LoginViewModel(ILoginService service, IUserDialogs dialog)
         {
             _service = service;
-
+            _udialog = dialog;
         }
 
-        private string _userName;
-        public string Username
-        {
-            get { return _userName; }
-            set
-            {
-                _userName = value;
-                RaisePropertyChanged(() => Username);
-            }
-        }
-
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                _password = value;
-                RaisePropertyChanged(() => Password);
-            }
-        }
-
-        private string _loginErrorMsg;
-        public string LoginErrorMsg
-        {
-            get { return _loginErrorMsg; }
-            set
-            {
-                _loginErrorMsg = value;
-                RaisePropertyChanged(() => LoginErrorMsg);
-            }
-        }
+        
         public ICommand ShowMenuPageCommand
         {
             get
@@ -67,9 +36,11 @@ namespace Bagahe.ViewModels.Login
                     bool isValidUser = false;
                     if (isValid)
                     {
-                        UserDialogs.Instance.ShowLoading("Loading", MaskType.Black);
 
-                        isValidUser = await _service.ValidateLogin(Username, Password);
+                        using (_udialog.Loading("Logging in..."))
+                        {
+                            isValidUser = await _service.ValidateLogin(Username, Password);
+                        }
 
                         if (isValidUser)
                         {
@@ -131,6 +102,39 @@ namespace Bagahe.ViewModels.Login
                 isValid = true;
 
             return isValid;
+        }
+
+        private string _userName;
+        public string Username
+        {
+            get { return _userName; }
+            set
+            {
+                _userName = value;
+                RaisePropertyChanged(() => Username);
+            }
+        }
+
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                RaisePropertyChanged(() => Password);
+            }
+        }
+
+        private string _loginErrorMsg;
+        public string LoginErrorMsg
+        {
+            get { return _loginErrorMsg; }
+            set
+            {
+                _loginErrorMsg = value;
+                RaisePropertyChanged(() => LoginErrorMsg);
+            }
         }
 
         private string _usernameErrorMsg;

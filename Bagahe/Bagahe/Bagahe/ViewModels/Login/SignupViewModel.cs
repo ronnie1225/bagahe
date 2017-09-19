@@ -36,13 +36,18 @@ namespace Bagahe.ViewModels.Login
                     bool isValidInput = checkInput();
                     if (isValidInput)
                     {
-                        isSuccess = await _service.AddNewUser(SignupFields);
+                        using (_udialog.Loading("Creating account..."))
+                        {
+                            isSuccess = await _service.AddNewUser(SignupFields);
+                        }
+
                         if (isSuccess)
                         {
                             ShowViewModel<SignupResultViewModel>();
                         } else
                         {
-                            SignUpGeneralErrorMsg = "The application has encountered an unknown error.";
+                            SignUpGeneralErrorMsg = "Someone already has that username. Please try again.";
+                            _udialog.Alert("Someone already has that username. Please try again.");
                         }
                     }
                 });
@@ -109,28 +114,39 @@ namespace Bagahe.ViewModels.Login
             if (isEmpty(password))
             {
                 SignupErrMsg.PasswordErrMsg = "Password is required.";
-            } else if (password.Length < 8)
+            }
+            else if (password.Length < 8)
             {
 
                 SignupErrMsg.PasswordErrMsg = "Passwords must be at least 8 characters long.";
             }
             else 
             {
+                List<string> errors = new List<string>();
 
                 if (!Regex.IsMatch(password, @"[A-Z]"))
+                    errors.Add("uppercase letter");
+                if (!Regex.IsMatch(password, @"[a-z]"))
+                    errors.Add("lowercase letter");
+                if (!Regex.IsMatch(password, @"[0-9]"))
+                    errors.Add("number");
+                  
+                if (errors.Count > 0)
                 {
-                    SignupErrMsg.PasswordErrMsg = "Your password must contain an uppercase letter.";
                     countInvalidInput++;
-                }
-                else if (!Regex.IsMatch(password, @"[a-z]"))
-                {
-                    SignupErrMsg.PasswordErrMsg = "Your password must contain a lowercase letter.";
-                    countInvalidInput++;
-                }
-                else if (!Regex.IsMatch(password, @"[0-9]"))
-                {
-                    SignupErrMsg.PasswordErrMsg = "Your password must contain a number.";
-                    countInvalidInput++;
+                    SignupErrMsg.PasswordErrMsg = "Your password must contain at least one ";
+                    int counter = 0;
+                    foreach (var error in errors)
+                    {
+                        counter++;
+                        SignupErrMsg.PasswordErrMsg += error;
+                        if (counter == errors.Count - 1)
+                            SignupErrMsg.PasswordErrMsg += " and ";
+                        else if (errors.Count != counter)
+                            SignupErrMsg.PasswordErrMsg += ", ";
+                        else
+                            SignupErrMsg.PasswordErrMsg += ".";
+                    }
                 }
             }
         }

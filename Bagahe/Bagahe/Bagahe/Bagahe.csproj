@@ -53,31 +53,31 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Search\TrackBaggageResultViewModel.cs" />
     <Compile Include="ViewModels\Search\TrackBaggageViewModel.cs" />
-    <Compile Include="ViewModels\Login\Views\ForgotPasswordView.xaml.cs">
+    <Compile Include="Views\ForgotPasswordView.xaml.cs">
       <DependentUpon>ForgotPasswordView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Login\Views\LoginView.xaml.cs">
+    <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Login\Views\MainView.xaml.cs">
+    <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\Login\Views\SignupResultView.xaml.cs">
+    <Compile Include="Views\SignupResultView.xaml.cs">
       <DependentUpon>SignupResultView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Login\Views\SignupView.xaml.cs">
+    <Compile Include="Views\SignupView.xaml.cs">
       <DependentUpon>SignupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Login\Views\TrackBaggageResultView.xaml.cs">
+    <Compile Include="Views\TrackBaggageResultView.xaml.cs">
       <DependentUpon>TrackBaggageResultView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Login\Views\TrackBaggageView.xaml.cs">
+    <Compile Include="Views\TrackBaggageView.xaml.cs">
       <DependentUpon>TrackBaggageView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewModels\Login\Views\MainView.xaml">
+    <EmbeddedResource Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -134,37 +134,37 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewModels\Login\Views\LoginView.xaml">
+    <EmbeddedResource Include="Views\LoginView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewModels\Login\Views\SignupView.xaml">
+    <EmbeddedResource Include="Views\SignupView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewModels\Login\Views\SignupResultView.xaml">
+    <EmbeddedResource Include="Views\SignupResultView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewModels\Login\Views\TrackBaggageView.xaml">
+    <EmbeddedResource Include="Views\TrackBaggageView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewModels\Login\Views\TrackBaggageResultView.xaml">
+    <EmbeddedResource Include="Views\TrackBaggageResultView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewModels\Login\Views\ForgotPasswordView.xaml">
+    <EmbeddedResource Include="Views\ForgotPasswordView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

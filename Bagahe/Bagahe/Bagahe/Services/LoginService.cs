@@ -20,10 +20,7 @@ namespace Bagahe.Services
         async Task<bool> ILoginService.ValidateLogin(string username, string password)
         {
             bool isExisting = false;
-            using (UserDialogs.Instance.Loading("Logging in..."))
-            {
-                await addDelay();
-            }
+            await addDelay();
             
             if (username == "admin" && password == "admin")
                 isExisting = true;

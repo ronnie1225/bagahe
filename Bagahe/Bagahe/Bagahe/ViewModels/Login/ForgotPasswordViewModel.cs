@@ -7,17 +7,19 @@ using MvvmCross.Core.ViewModels;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 using Bagahe.Interfaces;
+using Acr.UserDialogs;
 
 namespace Bagahe.ViewModels.Login
 {
     class ForgotPasswordViewModel : BaseViewModel
     {
         private readonly IForgotPasswordService _service;
+        private readonly IUserDialogs _udialog;
 
-
-        public ForgotPasswordViewModel(IForgotPasswordService service)
+        public ForgotPasswordViewModel(IForgotPasswordService service, IUserDialogs dialog)
         {
             _service = service;
+            _udialog = dialog;
         }
 
 
@@ -28,13 +30,22 @@ namespace Bagahe.ViewModels.Login
                 return new MvxCommand(async () => {
                     if (isValidEmail())
                     {
+                        bool isExist = false;
                         //check if the email exists in the DB
-                        bool isExist = await _service.CheckEmail(EmailAdd);
+                        using (_udialog.Loading("Checking email..."))
+                        {
+                            isExist = await _service.CheckEmail(EmailAdd);
+                        }
+
                         if (!isExist)
                             ErrorMsg = "The email you have entered is not yet registered.";
                         else
                         {
-                            //Send email.
+                            //Send email
+                            using (_udialog.Loading("Sending email..."))
+                            {
+                                await Task.Delay(2000);
+                            }
                             //Redirect
                             ErrorMsg = "Valid Email";
                         }

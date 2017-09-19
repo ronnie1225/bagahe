@@ -19,12 +19,9 @@ namespace Bagahe.Services
         async public Task<bool> AddNewUser(SignupFields SignupField)
         {
             bool isAdded = false;
-            using (UserDialogs.Instance.Loading("Creating account..."))
-            {
-                //Code for adding the inputs to the database here...
-                //Check if the inputs are existing in the DB
-                await addDelay();
-            }
+            //Code for adding the inputs to the database here...
+            //Check if the inputs are existing in the DB
+            await addDelay();
 
             //Code for validating if the inputs are successfully added to the db here ...
             isAdded = true;
