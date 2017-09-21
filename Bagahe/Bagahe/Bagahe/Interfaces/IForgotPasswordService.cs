@@ -9,5 +9,6 @@ namespace Bagahe.Interfaces
     interface IForgotPasswordService
     {
         Task<bool> CheckEmail(string email);
+        Task<bool> ChangePassword(string password);
     }
 }

@@ -21,8 +21,15 @@ namespace Bagahe.ViewModels.Login
             _service = service;
             _udialog = dialog;
         }
+        public void Init(string action, string email, string code)
+        {
+            _action = action;
+            EmailAdd = email;
+            randomString = code;
+            initDisplay();
+        }
 
-
+        private string randomString;
         public ICommand ResetPasswordCommand
         {
             get
@@ -46,8 +53,12 @@ namespace Bagahe.ViewModels.Login
                             {
                                 await Task.Delay(2000);
                             }
+                            //Change the way of generating random code.
+                            randomString = RandomString(8);
                             //Redirect
-                            ErrorMsg = "Valid Email";
+                            //ShowViewModel<FgtPwEnterCodeVeiwModel>();
+                            //ErrorMsg = "Valid Email " + randomString;
+                            ShowViewModel<VerifyCodeViewModel>(new { code = randomString, email = EmailAdd , from = "ForgotPwViewModel"});
                         }
                             
                     }
@@ -55,13 +66,48 @@ namespace Bagahe.ViewModels.Login
             }
 
         }
+        private void initDisplay()
+        {
+
+            IsVisibleEmailEntry = false;
+            IsVisibleEmailLabel = false;
+
+            if (_action.Equals("ResendCode"))
+            {
+                Header = "Resend Code";
+                Description = "We will send a security code to the email address below.";
+                IsVisibleEmailLabel = true;
+            } else
+            {
+                Header = "Forgot Password?";
+                Description = "We just need your registered email to sent you a security code.";
+                IsVisibleEmailEntry = true;
+            }
+        }
 
 
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        private string _action;
         public ICommand BackCommand
         {
             get
             {
-                return new MvxCommand(() => ShowViewModel<LoginViewModel>());
+                return new MvxCommand(() => {
+                    if (_action.Equals("ForgotPassword"))
+                        ShowViewModel<LoginViewModel>();
+                    else if (_action.Equals("ResendCode"))
+                        ShowViewModel<VerifyCodeViewModel>(new { code = randomString, email = EmailAdd });
+                    else
+                        ErrorMsg = "Unknown error has occured.";
+                });
+               
             }
         }
 
@@ -106,6 +152,48 @@ namespace Bagahe.ViewModels.Login
             {
                 _errorMsg = value;
                 RaisePropertyChanged(() => ErrorMsg);
+            }
+        }
+
+        //For display
+        private string _header;
+        public string Header
+        {
+            get { return _header; }
+            set
+            {
+                _header = value;
+                RaisePropertyChanged(() => Header);
+            }
+        }
+        private string _description;
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                RaisePropertyChanged(() => Description);
+            }
+        }
+        private bool _isVisibleEmailEntry;
+        public bool IsVisibleEmailEntry
+        {
+            get { return _isVisibleEmailEntry; }
+            set
+            {
+                _isVisibleEmailEntry = value;
+                RaisePropertyChanged(() => IsVisibleEmailEntry);
+            }
+        }
+        private bool _isVisibleEmailLabel;
+        public bool IsVisibleEmailLabel
+        {
+            get { return _isVisibleEmailLabel; }
+            set
+            {
+                _isVisibleEmailLabel = value;
+                RaisePropertyChanged(() => IsVisibleEmailLabel);
             }
         }
     }

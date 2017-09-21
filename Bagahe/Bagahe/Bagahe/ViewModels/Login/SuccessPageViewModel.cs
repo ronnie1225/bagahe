@@ -8,8 +8,13 @@ using System.Windows.Input;
 
 namespace Bagahe.ViewModels.Login
 {
-    class SignupResultViewModel : BaseViewModel
+    class SuccessPageViewModel : BaseViewModel
     {
+        public void Init(string message)
+        {
+            _message = message;
+        }
+
         public ICommand SignInCommand
         {
             get
@@ -19,6 +24,12 @@ namespace Bagahe.ViewModels.Login
                     ShowViewModel<LoginViewModel>();
                 });
             }
+        }
+
+        private string _message;
+        public string Message
+        {
+            get { return _message; }
         }
     }
 }

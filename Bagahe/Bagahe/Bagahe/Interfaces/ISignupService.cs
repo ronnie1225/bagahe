@@ -9,6 +9,7 @@ namespace Bagahe.Interfaces
 {
     interface ISignupService
     {
-        Task<bool> AddNewUser(SignupFields SignupField);
+        Task<bool> AddNewUser(SignupFieldsModel SignupField);
+        Task<List<UserInfoModel>> RetrieveUser(SignupFieldsModel SignupField);
     }
 }

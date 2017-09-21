@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace Bagahe.Views
 {
-    public partial class SignupResultView : ContentPage
+    public partial class VerifyCodeView : ContentPage
     {
-        public SignupResultView()
+        public VerifyCodeView()
         {
             InitializeComponent();
         }
