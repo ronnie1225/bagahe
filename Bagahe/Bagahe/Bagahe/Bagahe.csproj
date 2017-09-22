@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CoreApp.cs" />
+    <Compile Include="Helpers\BackButtonHelper.cs" />
     <Compile Include="Helpers\MvxPresenterHelpers.cs" />
     <Compile Include="Interfaces\IForgotPasswordService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />

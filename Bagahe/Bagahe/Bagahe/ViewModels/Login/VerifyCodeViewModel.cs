@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Bagahe.ViewModels.Login
 {
@@ -20,7 +21,7 @@ namespace Bagahe.ViewModels.Login
             _service = service;
             _udialog = dialog;
         }
-
+        
         public ICommand ValidateCodeCommand
         {
             get
@@ -60,28 +61,33 @@ namespace Bagahe.ViewModels.Login
             //--
             if ("ForgotPwViewModel".Equals(from))
                 await Timer(30);
+
             else
             {
                 ResendCodeButton = "Resend Code";
                 IsEnabledResend = true;
+                BGColorButton = "#2196f3";
             }
         }
 
 
         async Task Timer(int sec)
         {
-            int start = 0;
+            int count = 0;
             ResendCodeButton = "Resend Code (" + sec + ")";
             IsEnabledResend = false;
-            while (sec > start)
+            BGColorButton = "#d9534f";
+            while (sec + 1 > count)
             {
                 await Task.Delay(1000);
-                ResendCodeButton = "Resend Code ("+(sec-start)+")";
-                start++;
+                ResendCodeButton = "Resend Code (" + (sec - count) + ")";
+                count++;
             }
             ResendCodeButton = "Resend Code";
             IsEnabledResend = true;
+            BGColorButton = "#2196f3";
         }
+
 
         private string _resendCodeButton;
         public string ResendCodeButton
@@ -113,7 +119,7 @@ namespace Bagahe.ViewModels.Login
                 RaisePropertyChanged(() => InputCode);
             }
         }
-
+        //For display
         private string _errorMsg;
         public string ErrorMsg
         {
@@ -132,6 +138,16 @@ namespace Bagahe.ViewModels.Login
             {
                 _isEnabledResend = value;
                 RaisePropertyChanged(() => IsEnabledResend);
+            }
+        }
+        private string _bGColorButton;
+        public string BGColorButton
+        {
+            get { return _bGColorButton; }
+            set
+            {
+                _bGColorButton = value;
+                RaisePropertyChanged(() => BGColorButton);
             }
         }
     }

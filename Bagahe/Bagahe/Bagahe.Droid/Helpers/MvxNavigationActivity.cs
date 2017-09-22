@@ -15,6 +15,8 @@ using Xamarin.Forms;
 using MvvmCross.Platform;
 using Xamarin.Forms.Platform.Android;
 using Acr.UserDialogs;
+using Bagahe.Helpers;
+using Bagahe.Views;
 
 namespace Bagahe.Droid
 {
@@ -54,5 +56,41 @@ namespace Bagahe.Droid
         }
 
         public static NavigationPage NavigationPage { get; set; }
+
+        //For overriding the back button
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == 16908332) // xam forms nav bar back button id
+            {
+                var currentpage = (BackButtonHelper)Xamarin.Forms.Application.Current.
+                     MainPage.Navigation.NavigationStack.LastOrDefault();
+                
+                if (currentpage?.CustomBackButtonAction != null)
+                {
+                    currentpage?.CustomBackButtonAction.Invoke();
+                    return false;
+                }
+                return base.OnOptionsItemSelected(item);
+            }
+            else
+            {
+                return base.OnOptionsItemSelected(item);
+            }
+        }
+
+        public override void OnBackPressed()
+        {
+            var currentpage = (BackButtonHelper)Xamarin.Forms.Application.Current.
+                MainPage.Navigation.NavigationStack.LastOrDefault();
+
+            if (currentpage?.CustomBackButtonAction != null)
+            {
+                currentpage?.CustomBackButtonAction.Invoke();
+            }
+            else
+            {
+                base.OnBackPressed();
+            }
+        }
     }
 }
