@@ -21,7 +21,7 @@ namespace Bagahe.ViewModels.Login
             _service = service;
             _udialog = dialog;
         }
-        
+
         public ICommand ValidateCodeCommand
         {
             get
@@ -57,7 +57,7 @@ namespace Bagahe.ViewModels.Login
             _code = code;
             _email = email;
             //Remove this if the function for sending email is working.
-            ErrorMsg = code;
+            DemoCode = "Demo Code: "+code;
             //--
             if ("ForgotPwViewModel".Equals(from))
                 await Timer(30);
@@ -150,5 +150,18 @@ namespace Bagahe.ViewModels.Login
                 RaisePropertyChanged(() => BGColorButton);
             }
         }
+        //For demo purposes.
+        //Displaying the code
+        private string _demoCode;
+        public string DemoCode
+        {
+            get { return _demoCode; }
+            set
+            {
+                _demoCode = value;
+                RaisePropertyChanged(() => DemoCode);
+            }
+        }
+        
     }
 }

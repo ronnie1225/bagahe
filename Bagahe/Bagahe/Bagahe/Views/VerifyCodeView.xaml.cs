@@ -9,28 +9,11 @@ using Xamarin.Forms;
 
 namespace Bagahe.Views
 {
-    public partial class VerifyCodeView : BackButtonHelper
+    public partial class VerifyCodeView : ContentPage
     {
         public VerifyCodeView()
         {
             InitializeComponent();
-
-            if (EnableBackButtonOverride)
-            {
-                CustomBackButtonAction = async () =>
-                {
-                    var result = await this.DisplayAlert(null,
-                        "Hey wait now! are you sure " +
-                        "you want to go back?",
-                        "Yes go back", "Nope");
-
-                    if (result)
-                    {
-                        await Navigation.PopAsync(true);
-                    }
-                };
-            }
         }
-
     }
 }
