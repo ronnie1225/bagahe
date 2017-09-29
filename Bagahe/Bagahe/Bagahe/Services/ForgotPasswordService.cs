@@ -28,5 +28,15 @@ namespace Bagahe.Services
         {
             return Task.Delay(2000);
         }
+
+        async public Task<bool> ChangePassword(string password)
+        {
+            bool updatePassword = true;
+            //Code for updating pw to DB
+
+            await addDelay();
+
+            return updatePassword;
+        }
     }
 }

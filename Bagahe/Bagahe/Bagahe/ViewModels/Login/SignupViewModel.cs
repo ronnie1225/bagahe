@@ -29,33 +29,63 @@ namespace Bagahe.ViewModels.Login
         {
             get
             {
-                
+
                 return new MvxCommand(async () => {
                     SignupErrMsg.Init();
-                    bool isSuccess;   
-                    bool isValidInput = checkInput();
-                    if (isValidInput)
+                    bool isSuccess = false;
+                    bool isValidUserInput = isValidInput();
+                    if (isValidUserInput)
                     {
                         using (_udialog.Loading("Creating account..."))
                         {
-                            isSuccess = await _service.AddNewUser(SignupFields);
-                        }
+                            //retrieve user with the same email and username
+                            List<UserInfoModel> userList;
+                            userList = await _service.RetrieveUser(SignupFields);
+                            bool isRegistered = false;
+                            if (userList.Count > 0)
+                            {
+                                foreach (var user in userList)
+                                {
 
-                        if (isSuccess)
-                        {
-                            ShowViewModel<SignupResultViewModel>();
-                        } else
-                        {
-                            SignUpGeneralErrorMsg = "Someone already has that username. Please try again.";
-                            _udialog.Alert("Someone already has that username. Please try again.");
+                                    if (SignupFields.Username.Equals(user.Username))
+                                    {
+                                        countInvalidInput++;
+                                        SignupErrMsg.UsernameErrMsg = "Someone already has that username.";
+                                        isRegistered = true;
+
+                                    }
+                                    if (SignupFields.Email.Equals(user.Email))
+                                    {
+                                        countInvalidInput++;
+                                        SignupErrMsg.EmailErrMsg = "The email address you have entered is already registered.";
+                                        isRegistered = true;
+                                    }
+                                }
+                                hasError();
+                            }
+
+                            if (!isRegistered)
+                            {
+                                isSuccess = await _service.AddNewUser(SignupFields);
+
+                                if (isSuccess)
+                                {
+                                    string successMessage = "Congratulations! Your account has been created successfully and is ready to use.";
+                                    ShowViewModel<SuccessPageViewModel>(new { message = successMessage });
+                                }
+                                else
+                                {
+                                    SignUpGeneralErrorMsg = "An unknown error has occurred.";
+                                }
+                            }
                         }
                     }
                 });
             }
         }
 
-        int countInvalidInput;
-        private bool checkInput()
+        private int countInvalidInput;
+        private bool isValidInput()
         {
             countInvalidInput = 0;
             bool result = true;
@@ -85,7 +115,14 @@ namespace Bagahe.ViewModels.Login
                     countInvalidInput++;
                 }
             }
-            
+
+            result = !hasError();
+
+            return result;
+        }
+        private bool hasError()
+        {
+            bool result = false;
             if (countInvalidInput != 0)
             {
                 SignUpGeneralErrorMsg = "Please correct the " + countInvalidInput + " item";
@@ -93,12 +130,10 @@ namespace Bagahe.ViewModels.Login
                 {
                     SignUpGeneralErrorMsg += "s";
                 }
-                result = false;
+                result = true;
             }
-            
             return result;
         }
-
         private bool isEmpty(string input)
         {
             bool result = false;
@@ -120,7 +155,7 @@ namespace Bagahe.ViewModels.Login
 
                 SignupErrMsg.PasswordErrMsg = "Passwords must be at least 8 characters long.";
             }
-            else 
+            else
             {
                 List<string> errors = new List<string>();
 
@@ -130,7 +165,7 @@ namespace Bagahe.ViewModels.Login
                     errors.Add("lowercase letter");
                 if (!Regex.IsMatch(password, @"[0-9]"))
                     errors.Add("number");
-                  
+
                 if (errors.Count > 0)
                 {
                     countInvalidInput++;
@@ -169,7 +204,7 @@ namespace Bagahe.ViewModels.Login
                 }
             }
 
-            
+
         }
 
         private SignupErrMsg _signupErrMsg = new SignupErrMsg();
@@ -183,8 +218,8 @@ namespace Bagahe.ViewModels.Login
             }
         }
 
-        private SignupFields _signupFields = new SignupFields();
-        public SignupFields SignupFields
+        private SignupFieldsModel _signupFields = new SignupFieldsModel();
+        public SignupFieldsModel SignupFields
         {
             get { return _signupFields; }
             set
@@ -204,6 +239,6 @@ namespace Bagahe.ViewModels.Login
             }
         }
 
-        
+
     }
 }

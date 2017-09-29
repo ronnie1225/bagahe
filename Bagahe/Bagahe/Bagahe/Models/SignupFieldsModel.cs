@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bagahe.Models
 {
-    class SignupFields : BaseViewModel
+    class SignupFieldsModel : BaseViewModel
     {
         private string _firstName;
         public string FirstName
