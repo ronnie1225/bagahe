@@ -80,7 +80,7 @@ namespace Bagahe.ViewModels.Login
             } else
             {
                 Header = "Forgot Password?";
-                Description = "We just need your registered email to sent you a security code.";
+                Description = "We just need your registered email to send you a security code.";
                 IsVisibleEmailEntry = true;
             }
         }
