@@ -16,7 +16,7 @@ namespace Bagahe.Services
             return Task.Delay(2000);
         }
 
-        async public Task<bool> AddNewUser(SignupFields SignupField)
+        async public Task<bool> AddNewUser(SignupFieldsModel SignupField)
         {
             bool isAdded = false;
             //Code for adding the inputs to the database here...
@@ -28,5 +28,24 @@ namespace Bagahe.Services
 
             return isAdded;
         }
+
+        async public Task<List<UserInfoModel>> RetrieveUser(SignupFieldsModel SignupField)
+        {
+            await addDelay();
+            
+            //Mock existing accounts in DB
+            List<UserInfoModel> mockUser = new List<UserInfoModel>();
+            UserInfoModel userOne = new UserInfoModel();
+            userOne.Username = "Bagahe";
+            userOne.Email = "bagahe@gmail.com";
+            mockUser.Add(userOne);
+
+            UserInfoModel userTwo = new UserInfoModel();
+            userTwo.Username = "Baggage";
+            userTwo.Email = "baggage@gmail.com";
+            mockUser.Add(userTwo);
+            return mockUser;
+        }
+        
     }
 }

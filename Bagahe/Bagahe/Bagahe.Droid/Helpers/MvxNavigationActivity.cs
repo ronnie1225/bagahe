@@ -15,6 +15,8 @@ using Xamarin.Forms;
 using MvvmCross.Platform;
 using Xamarin.Forms.Platform.Android;
 using Acr.UserDialogs;
+using Bagahe.Helpers;
+using Bagahe.Views;
 
 namespace Bagahe.Droid
 {
@@ -54,5 +56,7 @@ namespace Bagahe.Droid
         }
 
         public static NavigationPage NavigationPage { get; set; }
+
+
     }
 }

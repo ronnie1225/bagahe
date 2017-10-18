@@ -11,6 +11,7 @@
   </ContentPage.Padding>
   <ContentPage.Resources>
     <ResourceDictionary>
+      
       <Style x:Key="buttonProperty" TargetType="Button">
         <Setter Property="BackgroundColor" Value="#2196f3"/>
         <Setter Property="BorderRadius" Value="4"/>

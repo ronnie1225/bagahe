@@ -49,12 +49,12 @@ namespace Bagahe.ViewModels.Login
                         else
                         {
                             LoginErrorMsg = "Incorrect Username or Password";
+                           
                         }
                     }
                 });
             }
         }
-
         public ICommand ShowSignUpCommand
         {
             get
@@ -72,7 +72,7 @@ namespace Bagahe.ViewModels.Login
             {
                 return new MvxCommand(() =>
                 {
-                    ShowViewModel<ForgotPasswordViewModel>();
+                    ShowViewModel<ForgotPasswordViewModel>(new { action = "ForgotPassword"});
                 });
             }
         }
