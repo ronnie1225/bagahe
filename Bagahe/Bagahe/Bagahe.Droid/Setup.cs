@@ -6,6 +6,8 @@ using MvvmCross.Platform;
 using MvvmCross.Droid.Views;
 using Android.Views;
 using MvvmCross.Platform.IoC;
+using Bagahe.Interfaces;
+using Bagahe.Droid.Services;
 
 namespace Bagahe.Droid
 {
@@ -17,6 +19,8 @@ namespace Bagahe.Droid
 
         protected override IMvxApplication CreateApp()
         {
+            //Mvx.RegisterSingleton<IFileService>(new FileService());
+            //Xamarin.Forms.DependencyService.Register<FileService>();
             return new CoreApp();
         }
 

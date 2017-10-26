@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite.Net.Async;
+using Bagahe.Interfaces;
+using Bagahe.Models;
+using Bagahe.Services;
 
 namespace Bagahe
 {
@@ -23,6 +27,8 @@ namespace Bagahe
 
             Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
+            //Mvx.Resolve<IInitializeSqliteService>().CreateDB();
+
             RegisterAppStart(new CustomAppStart());
 
         }
@@ -30,14 +36,20 @@ namespace Bagahe
 
     public class CustomAppStart : MvxNavigatingObject, IMvxAppStart
     {
-        public void Start(object hint = null)
+        public static SQLite.Net.Async.SQLiteAsyncConnection Connection { get; set; }
+        public async void Start(object hint = null)
         {
-            //Change code where you check if the user has previously logged in
-            bool isLoggedIn = false;
+            await InitializeSqliteService.Instance.CreateDB();
 
-            if (isLoggedIn)
+            ISqliteService<UserModel> userRepo = new SqliteService<UserModel>();
+            var user = await userRepo.Load();
+            //Change code where you check if the user has previously logged in
+            //bool isLoggedIn = false;
+            //if (isLoggedIn)
+            if(user.IsLoggedIn)
             {
-                ShowViewModel<TrackBaggageViewModel>();
+                //ShowViewModel<TrackBaggageViewModel>();
+                ShowViewModel<TrackBaggagesViewModel>();
             }
             else
             {

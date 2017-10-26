@@ -37,18 +37,28 @@
   <ItemGroup>
     <Compile Include="CoreApp.cs" />
     <Compile Include="Helpers\BackButtonHelper.cs" />
+    <Compile Include="Interfaces\ISqliteNewService.cs" />
     <Compile Include="Helpers\MvxPresenterHelpers.cs" />
+    <Compile Include="Interfaces\IFileHelper.cs" />
     <Compile Include="Interfaces\IForgotPasswordService.cs" />
+    <Compile Include="Interfaces\IInitializeSqliteService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />
     <Compile Include="Interfaces\ISignupService.cs" />
+    <Compile Include="Interfaces\ISqliteService.cs" />
+    <Compile Include="Interfaces\IValidation.cs" />
+    <Compile Include="Models\BagInfoModel.cs" />
     <Compile Include="Models\PasswordErrMsgModel.cs" />
     <Compile Include="Models\PasswordFieldsModel.cs" />
     <Compile Include="Models\SignupErrMsgModel.cs" />
     <Compile Include="Models\SignupFieldsModel.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Services\ForgotPasswordService.cs" />
+    <Compile Include="Services\InitializeSqliteService.cs" />
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\SignupService.cs" />
+    <Compile Include="Services\SqliteService.cs" />
+    <Compile Include="Services\ValidationService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Login\NewPasswordViewModel.cs" />
     <Compile Include="ViewModels\Login\VerifyCodeViewModel.cs" />
@@ -58,6 +68,7 @@
     <Compile Include="ViewModels\Login\SignupViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Search\TrackBaggageResultViewModel.cs" />
+    <Compile Include="ViewModels\Search\TrackBaggagesViewModel.cs" />
     <Compile Include="ViewModels\Search\TrackBaggageViewModel.cs" />
     <Compile Include="Views\ForgotPasswordView.xaml.cs">
       <DependentUpon>ForgotPasswordView.xaml</DependentUpon>
@@ -80,6 +91,9 @@
     </Compile>
     <Compile Include="Views\TrackBaggageResultView.xaml.cs">
       <DependentUpon>TrackBaggageResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrackBaggagesView.xaml.cs">
+      <DependentUpon>TrackBaggagesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TrackBaggageView.xaml.cs">
       <DependentUpon>TrackBaggageView.xaml</DependentUpon>
@@ -154,15 +168,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.3.4.270\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.4.231\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.3.4.270\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.4.231\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.3.4.270\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.4.231\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -217,12 +231,18 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\TrackBaggagesView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="..\..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
+  <Import Project="..\..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets'))" />
   </Target>
 </Project>
