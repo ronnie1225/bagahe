@@ -1,6 +1,8 @@
 ﻿using Acr.UserDialogs;
 using Bagahe.Interfaces;
 using Bagahe.ViewModels.Search;
+using Bagahe.Entities;
+using Bagahe.Models;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using System;
@@ -10,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Newtonsoft.Json;
 
 namespace Bagahe.ViewModels.Login
 {
@@ -17,14 +20,16 @@ namespace Bagahe.ViewModels.Login
     {
         private readonly ILoginService _service;
         private readonly IUserDialogs _udialog;
+        private readonly IValidation _validation;
 
-        public LoginViewModel(ILoginService service, IUserDialogs dialog)
+        public LoginViewModel(ILoginService service, IUserDialogs dialog, IValidation validation)
         {
             _service = service;
             _udialog = dialog;
+            _validation = validation;
         }
 
-        
+
         public ICommand ShowMenuPageCommand
         {
             get
@@ -33,24 +38,32 @@ namespace Bagahe.ViewModels.Login
                 {
 
                     bool isValid = validateUserInput();
-                    bool isValidUser = false;
                     if (isValid)
                     {
-
                         using (_udialog.Loading("Logging in..."))
                         {
-                            isValidUser = await _service.ValidateLogin(Username, Password);
-                        }
+                            Dictionary<string, string> parameters = new Dictionary<string, string>();
+                            parameters.Add("username", Username);
+                            parameters.Add("password", Password);
+                            var restService = Mvx.Resolve<IRestService>();
+                            restService.WebMethod = "AuthenticateUser";
+                            restService.Parameters = parameters;
 
-                        if (isValidUser)
-                        {
-                            //  ShowViewModel<TrackBaggageViewModel>();
-                            ShowViewModel<TrackBaggagesViewModel>();
-                        }
-                        else
-                        {
-                            LoginErrorMsg = "Incorrect Username or Password";
-                           
+                            string returnResponse = await restService.Consume();
+                            AuthenticateUserResponse authUserResponse = JsonConvert.DeserializeObject<AuthenticateUserResponse>(returnResponse);
+
+                            Application.Current.Properties["token"] = authUserResponse.Token;
+                            Application.Current.Properties["name"] = authUserResponse.Name;
+                            await Application.Current.SavePropertiesAsync();
+
+                            if (authUserResponse.StatusCode == "0")
+                            {
+                                ShowViewModel<TrackBaggagesViewModel>();
+                            }
+                            else
+                            {
+                                LoginErrorMsg = "Incorrect Username or Password";
+                            }
                         }
                     }
                 });
@@ -73,7 +86,7 @@ namespace Bagahe.ViewModels.Login
             {
                 return new MvxCommand(() =>
                 {
-                    ShowViewModel<ForgotPasswordViewModel>(new { action = "ForgotPassword"});
+                    ShowViewModel<ForgotPasswordViewModel>(new { action = "ForgotPassword" });
                 });
             }
         }
@@ -87,13 +100,15 @@ namespace Bagahe.ViewModels.Login
             UsernameErrorMsg = "Username is required.";
             PasswordErrorMsg = "Password is required.";
 
-            if (!("").Equals(Username) && Username != null)
+            //if (!("").Equals(Username) && Username != null)
+            if(!_validation.IsNull(Username))
             {
                 isUsernameValid = true;
                 UsernameErrorMsg = "";
             }
 
-            if (!("").Equals(Password) && Password != null)
+            //if (!("").Equals(Password) && Password != null)
+            if(!_validation.IsNull(Password))
             {
                 isPasswordValid = true;
                 PasswordErrorMsg = "";
@@ -104,6 +119,17 @@ namespace Bagahe.ViewModels.Login
 
             return isValid;
         }
+
+        //private LoginModel _loginModel = new LoginModel();
+        //public LoginModel LoginModel
+        //{
+        //    get { return _loginModel; }
+        //    set
+        //    {
+        //        _loginModel = value;
+        //        RaisePropertyChanged(() => LoginModel);
+        //    }
+        //}
 
         private string _userName;
         public string Username

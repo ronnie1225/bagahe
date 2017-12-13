@@ -35,8 +35,12 @@
       </ContentView>
       <Label Text="{Binding InputErrorMsg}"
               Style="{StaticResource inputErrorMsg}"/>
-      <Label Text="Bagtag #/ File/Claim #/ Lastname: "/>
-      <Entry Text="{Binding InputData}" />
+      <Label Text="Bagtag # :"/>
+      <Entry Text="{Binding Bagtag}" />
+      <Label Text="PNR # :"/>
+      <Entry Text="{Binding PNR}" />
+      <Label Text="Last Name : "/>
+      <Entry Text="{Binding LastName}" />
       <Button Text="Track"
                Style="{StaticResource buttonProperty}"
                Command ="{Binding TrackResultCommand}"/>

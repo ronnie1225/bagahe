@@ -26,9 +26,8 @@ namespace Bagahe
                 .RegisterAsLazySingleton();
 
             Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
-
-            //Mvx.Resolve<IInitializeSqliteService>().CreateDB();
-
+            //Mvx.RegisterSingleton<IInitializeSqliteService>(() => InitializeSqliteService.Instance);
+            
             RegisterAppStart(new CustomAppStart());
 
         }
@@ -39,14 +38,10 @@ namespace Bagahe
         public static SQLite.Net.Async.SQLiteAsyncConnection Connection { get; set; }
         public async void Start(object hint = null)
         {
-            await InitializeSqliteService.Instance.CreateDB();
-
-            ISqliteService<UserModel> userRepo = new SqliteService<UserModel>();
-            var user = await userRepo.Load();
             //Change code where you check if the user has previously logged in
-            //bool isLoggedIn = false;
-            //if (isLoggedIn)
-            if(user.IsLoggedIn)
+            bool isLoggedIn = false;
+            if (isLoggedIn)
+           // if(user.IsLoggedIn)
             {
                 //ShowViewModel<TrackBaggageViewModel>();
                 ShowViewModel<TrackBaggagesViewModel>();

@@ -2,6 +2,55 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Bagahe.Views.TrackBaggageResultView"
-             Title="Baggage Location">
-  <Label Text="Track Baggage Results!!!" VerticalOptions="Center" HorizontalOptions="Center" />
+             Title="">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="input" TargetType="Label">
+        <Setter Property="TextColor" Value="Red" />
+        <Setter Property="FontSize" Value="15"/>
+      </Style>
+      <Style x:Key="output" TargetType="Label">
+        <Setter Property="FontSize" Value="17"/>
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+                iOS="20, 40, 20, 20"
+                Android="20, 20, 20, 20"
+                WinPhone="20, 20, 20, 20" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout >
+      <ListView ItemsSource="{Binding ScanPointList}"
+              IsGroupingEnabled="true"
+              HasUnevenRows="true">
+        <ListView.GroupHeaderTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout Orientation="Vertical">
+                <Label Text="{Binding Bagtag}" Style="{StaticResource input}"/>
+                <Label Text="{Binding PNR}" Style="{StaticResource input}"/>
+                <Label Text="{Binding LastName}" Style="{StaticResource input}"/>
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="{Binding Location}" Style="{StaticResource output}"/>
+                  <Label Text="{Binding Station}" VerticalTextAlignment="Center" Style="{StaticResource output}"/>
+                  <Label Text="{Binding ScanTime}" VerticalTextAlignment="Center" Style="{StaticResource output}"/>
+                </StackLayout>
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

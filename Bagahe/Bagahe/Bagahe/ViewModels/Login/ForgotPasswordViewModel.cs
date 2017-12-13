@@ -58,7 +58,14 @@ namespace Bagahe.ViewModels.Login
                             //Redirect
                             //ShowViewModel<FgtPwEnterCodeVeiwModel>();
                             //ErrorMsg = "Valid Email " + randomString;
-                            ShowViewModel<VerifyCodeViewModel>(new { code = randomString, email = EmailAdd , from = "ForgotPwViewModel"});
+                            try
+                            {
+                                ShowViewModel<VerifyCodeViewModel>(new { code = randomString, email = EmailAdd, from = "ForgotPwViewModel" });
+                            }
+                            catch(Exception e)
+                            {
+                                return;
+                            }
                         }
                             
                     }

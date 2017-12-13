@@ -10,6 +10,7 @@ namespace Bagahe.Interfaces
     {
         bool IsNull(string value);
         bool IsNumeric(string value);
-        bool Is10Digits(string value);        
+        bool Is10Digits(string value);
+        bool IsPNRValid(string value);
     }
 }

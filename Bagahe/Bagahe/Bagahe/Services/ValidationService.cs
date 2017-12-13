@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bagahe.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace Bagahe.Services
 {
@@ -22,5 +23,11 @@ namespace Bagahe.Services
         {
             return value.Length == 10 ? true : false;
         }
+
+        public bool IsPNRValid(string value)
+        {
+            return (value.Length == 6 ? true : false) && Regex.IsMatch(value, @"^[A-Z\d]{6}$");           
+        }
+        
     }
 }

@@ -36,17 +36,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CoreApp.cs" />
+    <Compile Include="Entities\AuthenticateUserInput.cs" />
+    <Compile Include="Entities\AuthenticateUserResponse.cs" />
+    <Compile Include="Entities\BagTrackUserInput.cs" />
+    <Compile Include="Entities\BaseInput.cs" />
+    <Compile Include="Entities\BaseResponse.cs" />
+    <Compile Include="Entities\GetBagInfoInput.cs" />
+    <Compile Include="Entities\GetBagInfoResponse.cs" />
+    <Compile Include="Entities\TrackResponse.cs" />
     <Compile Include="Helpers\BackButtonHelper.cs" />
-    <Compile Include="Interfaces\ISqliteNewService.cs" />
+    <Compile Include="Interfaces\IRestService.cs" />
     <Compile Include="Helpers\MvxPresenterHelpers.cs" />
-    <Compile Include="Interfaces\IFileHelper.cs" />
     <Compile Include="Interfaces\IForgotPasswordService.cs" />
-    <Compile Include="Interfaces\IInitializeSqliteService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />
     <Compile Include="Interfaces\ISignupService.cs" />
-    <Compile Include="Interfaces\ISqliteService.cs" />
     <Compile Include="Interfaces\IValidation.cs" />
     <Compile Include="Models\BagInfoModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PasswordErrMsgModel.cs" />
     <Compile Include="Models\PasswordFieldsModel.cs" />
     <Compile Include="Models\SignupErrMsgModel.cs" />
@@ -54,10 +60,9 @@
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Services\ForgotPasswordService.cs" />
-    <Compile Include="Services\InitializeSqliteService.cs" />
     <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Services\RestService.cs" />
     <Compile Include="Services\SignupService.cs" />
-    <Compile Include="Services\SqliteService.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Login\NewPasswordViewModel.cs" />
@@ -108,9 +113,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Acr.UserDialogs.6.3.8\lib\portable-win+net45+wp8+win8+wpa81\Acr.UserDialogs.dll</HintPath>
@@ -137,6 +140,10 @@
     </Reference>
     <Reference Include="MvvmCross.Platform, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MvvmCross.Platform.5.1.1\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -167,6 +174,9 @@
       <HintPath>..\..\packages\SQLitePCLRaw.core.1.1.5\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\System.Net.Http.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.3.4.231\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
@@ -182,6 +192,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="webapi.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\LoginView.xaml">

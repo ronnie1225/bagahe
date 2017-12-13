@@ -20,7 +20,7 @@ using Bagahe.Views;
 
 namespace Bagahe.Droid
 {
-    [Activity(Theme = "@style/Theme.MainBackground", Label = "XFormsCross Template",
+    [Activity(Theme = "@style/Theme.MainBackground", Label = "BAGAHE",
     ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MvxNavigationActivity
     : FormsApplicationActivity, IMvxPageNavigationProvider
